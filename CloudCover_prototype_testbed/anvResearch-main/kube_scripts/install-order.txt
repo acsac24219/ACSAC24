@@ -1,0 +1,9 @@
+# Start kube cluster with start-cluster.txt
+# Join all nodes to cluster using join-command token
+# Install prometheus setup files
+# Install Metallb
+# Install prometheus full files
+# Install istio and label namespace
+
+# Deploy workloads
+

@@ -1,0 +1,53 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: etcd # Modify this line with the service name
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: etcd # Modify this line with the service name
+  labels:
+    app: etcd # Modify this line with the service name
+    service: etcd # Modify this line with the service name
+spec:
+  ports:
+  - port: 2379 # Modify this line with the listening port number
+    name: http
+  - port: 2380 # Modify this line with the listening port number
+    name: http2
+  selector:
+    app: etcd # Modify this line with the service name
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: etcd # Modify this line with the service name
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: etcd 
+  template:
+    metadata:
+      labels:
+        app: etcd # Modify this line with the service name
+    spec:
+      #nodeSelector:
+      #  appName: etcd
+      terminationGracePeriodSeconds: 0
+      serviceAccountName: etcd # Modify this line with the service name
+      containers:
+      - name: etcd 
+        image: bitnami/etcd 
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: ALLOW_NONE_AUTHENTICATION
+            value: "yes"
+          - name: ETCD_LISTEN_CLIENT_URLS
+            value: "http://0.0.0.0:2379"
+        ports:
+        - containerPort: 2379
+        - containerPort: 2380
+

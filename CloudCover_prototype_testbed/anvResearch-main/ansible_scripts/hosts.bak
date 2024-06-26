@@ -1,0 +1,17 @@
+[masters]
+master ansible_host=172.16.20.11 ansible_user=kube
+
+[followers]
+follow1 ansible_host=172.16.20.12 ansible_user=kube
+follow2 ansible_host=172.16.20.13 ansible_user=kube
+
+[workers]
+worker1 ansible_host=172.16.10.143 ansible_user=research
+worker2 ansible_host=172.16.10.144 ansible_user=research
+worker3 ansible_host=172.16.10.145 ansible_user=research
+worker4 ansible_host=172.16.10.146 ansible_user=research
+worker5 ansible_host=172.16.10.147 ansible_user=research
+worker6 ansible_host=172.16.10.148 ansible_user=research
+worker7 ansible_host=172.16.10.149 ansible_user=research
+worker8 ansible_host=172.16.10.150 ansible_user=research
+worker9 ansible_host=172.16.10.151 ansible_user=research

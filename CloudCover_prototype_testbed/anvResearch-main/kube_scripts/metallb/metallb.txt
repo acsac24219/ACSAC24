@@ -1,0 +1,8 @@
+kubectl edit configmap -n kube-system kube-proxy
+
+### EDITS FOR CONFIG MAP
+kubectl get configmap kube-proxy -n kube-system -o yaml | \
+sed -e "s/strictARP: false/strictARP: true/" | \
+kubectl apply -f - -n kube-system
+kubectl apply -f metallb-native-prometheus.yaml
+

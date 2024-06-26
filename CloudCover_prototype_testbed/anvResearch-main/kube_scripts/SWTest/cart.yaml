@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cart # Modify this line with the service name
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cart # Modify this line with the service name
+  labels:
+    app: cart # Modify this line with the service name
+    service: cart # Modify this line with the service name
+spec:
+  ports:
+  - port: 9094  # Modify this line with the listening port number
+    name: http
+  selector:
+    app: cart # Modify this line with the service name
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cart # Modify this line with the service name
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cart # Modify this line with the service name
+  template:
+    metadata:
+      labels:
+        app: cart # Modify this line with the service name
+    spec:
+      nodeSelector:
+        appName: cart 
+      terminationGracePeriodSeconds: 0
+      serviceAccountName: cart # Modify this line with the service name
+      containers:
+      - name: cart # Modify this line with the service name
+        image: <REPONAME>/cart
+        imagePullPolicy: IfNotPresent
+        securityContext:
+          runAsUser: 0

@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: frontend # Modify this line with the service name
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend # Modify this line with the service name
+  labels:
+    app: frontend # Modify this line with the service name
+    service: frontend # Modify this line with the service name
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80 # Modify this line with the listening port number
+    targetPort: 80
+    name: http
+  selector:
+    app: frontend # Modify this line with the service name
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend # Modify this line with the service name
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend # Modify this line with the service name
+  template:
+    metadata:
+      labels:
+        app: frontend # Modify this line with the service name
+    spec:
+      terminationGracePeriodSeconds: 0
+      serviceAccountName: frontend # Modify this line with the service name
+      containers:
+      - name: frontend # Modify this line with the service name
+        image: <REPONAME>/frontend-test
+        imagePullPolicy: Always
+        securityContext:
+          runAsUser: 0
+

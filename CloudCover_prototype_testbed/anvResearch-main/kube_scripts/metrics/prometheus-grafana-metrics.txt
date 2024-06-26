@@ -1,0 +1,18 @@
+git clone https://github.com/prometheus-operator/kube-prometheus.git
+
+kubectl create -f kube-prometheus/manifests/setup
+
+kubectl get ns monitoring
+
+kubectl create -f kube-prometheus/manifests/
+
+#kubectl get pods -n monitoring -w
+
+kubectl get svc -n monitoring
+
+### WAIT FOR MONITORING SERVICES TO COME ONLINE
+kubectl --namespace monitoring port-forward svc/grafana 3000 --address=0.0.0.0 > /dev/null &
+
+kubectl --namespace monitoring port-forward svc/prometheus-k8s 9090 --address=0.0.0.0 > /dev/null &
+
+kubectl --namespace monitoring port-forward svc/alertmanager-main 9093 --address=0.0.0.0 > /dev/null &

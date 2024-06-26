@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: fs1 # Modify this line with the service name
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fs1 # Modify this line with the service name
+  labels:
+    app: fs1 # Modify this line with the service name
+    service: fs1 # Modify this line with the service name
+spec:
+  ports:
+  - port: 80 # Modify this line with the listening port number
+    name: http
+  selector:
+    app: fs1 # Modify this line with the service name
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fs1 # Modify this line with the service name
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fs1 # Modify this line with the service name
+  template:
+    metadata:
+      labels:
+        app: fs1 # Modify this line with the service name
+    spec:
+      nodeSelector:
+        appName: fs1
+      terminationGracePeriodSeconds: 0
+      serviceAccountName: fs1 # Modify this line with the service name
+      containers:
+      - name: fake-service1 # Modify this line with the service name
+        image: nicholasjackson/fake-service:v0.24.2
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: NAME
+            value: "fs1" # Modify this line with the service name
+          - name: LISTEN_ADDR
+            value: "0.0.0.0:80" # Modify this line to set listening port number
+          - name: MESSAGE
+            value: "First Fake Service" # Modify this line with service name
+          - name: HTTP_CLIENT_APPEND_REQUEST
+            value: "false"
+              #          - name: UPSTREAM_URIS
+            #            value: "http://fs2:82" # Modify this line to set upstream targets+portnums
+      - name: etcd
+        image: bitnami/etcd
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: ALLOW_NONE_AUTHENTICATION
+            value: "yes"
+          - name: ETCD_LISTEN_CLIENT_URLS
+            value: "http://0.0.0.0:2379"
+        ports:
+        - containerPort: 2379
+        - containerPort: 2380

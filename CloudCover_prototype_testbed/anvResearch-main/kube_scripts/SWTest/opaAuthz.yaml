@@ -1,0 +1,15 @@
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: fs-opa
+  namespace: default
+spec:
+  action: CUSTOM
+  provider:
+    name: "opa.default"
+  rules:
+  - to:
+    - operation:
+        methods: ["GET"]
+        notHosts: ["ext*"]

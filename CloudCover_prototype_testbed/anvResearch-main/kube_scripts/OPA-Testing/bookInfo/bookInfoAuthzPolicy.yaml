@@ -1,0 +1,74 @@
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: bi-istio-denyall
+spec:
+  {}
+
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: bi-istio-allowextpp
+spec:
+  action: ALLOW
+  rules:
+  - to:
+    - operation:
+        methods: ["GET"]
+        paths: ["/productpage"]
+
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: bi-istio-allowppdet
+spec:
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/default/sa/bookinfo-productpage"]
+    - source:
+        namespaces: ["default"]
+    to:
+    - operation:
+        methods: ["GET"]
+        paths: ["/details/*"]
+
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: bi-istio-allowpprev
+spec:
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/default/sa/bookinfo-productpage"]
+    - source:
+        namespaces: ["default"]
+    to:
+    - operation:
+        methods: ["GET"]
+        paths: ["/reviews/*"]
+
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: bi-istio-allowrevrat
+spec:
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/default/sa/bookinfo-reviews"]
+    - source:
+        namespaces: ["default"]
+    to:
+    - operation:
+        methods: ["GET"]
+        paths: ["/ratings/*"]

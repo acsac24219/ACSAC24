@@ -1,0 +1,111 @@
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: denyall
+spec:
+  {}
+
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-frontend-access
+spec:
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/default/sa/ext"]
+    - source:
+        namespaces: ["default"]
+  - to:
+    - operation:
+        hosts: ["frontend.default.svc.cluster.local"]
+        methods: ["GET"]
+        paths: ["/"]
+
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-logs-access
+spec:
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/default/sa/ext"]
+    - source:
+        namespaces: ["default"]
+  - to:
+    - operation:
+        hosts: ["logs.default.svc.cluster.local"]
+        methods: ["GET"]
+        paths: ["/gatherLogs"]
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-check-pay
+spec:
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/default/sa/checkout"]
+    - source:
+        namespaces: ["default"]
+    to:
+    - operation:
+        hosts: ["payment.default.svc.cluster.local"]
+        methods: ["POST"]
+        paths: ["/pay"]
+
+
+
+#######################################
+###### WILDCARD POLICY FOR LOGS #######
+#######################################
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-log-checkout
+spec:
+  selector:
+    matchLabels:
+      app: checkout
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/default/sa/logs"]
+    to:
+    - operation:
+        methods: ["POST"]
+        hosts: ["checkout.default.svc.cluster.local"]
+        paths: ["*"]
+#######################################
+###### WILDCARD POLICY FOR LOGS #######
+#######################################
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-frontend-check
+spec:
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/default/sa/frontend"]
+    - source:
+        namespaces: ["default"]
+    to:
+    - operation:
+        hosts: ["checkout.default.svc.cluster.local"]
+        methods: ["POST"]
+        paths: ["/placeOrder"]
+
+

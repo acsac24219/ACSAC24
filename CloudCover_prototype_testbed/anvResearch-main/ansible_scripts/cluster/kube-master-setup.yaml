@@ -1,0 +1,35 @@
+---
+- hosts: master
+  become: yes
+  tasks:
+  - name: change hostname
+    ansible.builtin.hostname:
+      name: "{{ inventory_hostname }}"
+    become: true
+
+  - name: remove swap
+    shell: "swapoff -a"
+ 
+  - name: initialize the cluster
+    shell: kubeadm init --pod-network-cidr=192.168.0.0/16 --control-plane-endpoint 172.16.20.11:6443 --upload-certs
+ 
+  - name: create .kube dir
+    shell: mkdir -p $HOME/.kube
+
+  - name: copy admin.conf
+    shell: sudo cp -f /etc/kubernetes/admin.conf $HOME/.kube/config
+
+  - name: own .kube dir
+    shell: sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+  - name: fetch admin.conf
+    fetch:
+      src: /etc/kubernetes/admin.conf
+      dest: /home/anvil/.kube/config
+      flat: true
+ 
+  - name: install Pod network
+    shell: kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/tigera-operator.yaml
+
+  - name: install Pod network
+    shell: kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/custom-resources.yaml

@@ -1,0 +1,104 @@
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: frontend-headers-append # Modify this line with a unique name for the target service
+  namespace: default
+spec:
+  configPatches:
+  - applyTo: ROUTE_CONFIGURATION
+    match:
+      context: SIDECAR_OUTBOUND
+    patch:
+      operation: MERGE
+      value:
+        request_headers_to_add:
+          - header:
+              key: "tokens"
+              value: "frontend" # Modify this line with the token for selected service
+            append: true
+          - header:
+              key: "sources"
+              value: "frontend" # Modify this line with the service name
+            append: true
+  workloadSelector:
+    labels:
+      app: frontend # Modify this line with the service name
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: checkout-headers-append # Modify this line with a unique name for the target service
+  namespace: default
+spec:
+  configPatches:
+  - applyTo: ROUTE_CONFIGURATION
+    match:
+      context: SIDECAR_OUTBOUND
+    patch:
+      operation: MERGE
+      value:
+        request_headers_to_add:
+          - header:
+              key: "tokens"
+              value: "checkout" # Modify this line with the token for selected service
+            append: true
+          - header:
+              key: "sources"
+              value: "checkout" # Modify this line with the service name
+            append: true
+  workloadSelector:
+    labels:
+      app: checkout # Modify this line with the service name
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: payment-headers-append # Modify this line with a unique name for the target service
+  namespace: default
+spec:
+  configPatches:
+  - applyTo: ROUTE_CONFIGURATION
+    match:
+      context: SIDECAR_OUTBOUND
+    patch:
+      operation: MERGE
+      value:
+        request_headers_to_add:
+          - header:
+              key: "tokens"
+              value: "payment" # Modify this line with the token for selected service
+            append: true
+          - header:
+              key: "sources"
+              value: "payment" # Modify this line with the service name
+            append: true
+  workloadSelector:
+    labels:
+      app: payment # Modify this line with the service name
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: cart-headers-append # Modify this line with a unique name for the target service
+  namespace: default
+spec:
+  configPatches:
+  - applyTo: ROUTE_CONFIGURATION
+    match:
+      context: SIDECAR_OUTBOUND
+    patch:
+      operation: MERGE
+      value:
+        request_headers_to_add:
+          - header:
+              key: "tokens"
+              value: "cart" # Modify this line with the token for selected service
+            append: true
+          - header:
+              key: "sources"
+              value: "cart" # Modify this line with the service name
+            append: true
+  workloadSelector:
+    labels:
+      app: cart # Modify this line with the service name

@@ -1,0 +1,12 @@
+wget https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml -O metrics-server-components.yaml
+
+EDIT ANY CONFIGS
+vim metrics-server-components.yaml
+
+kubectl apply -f metrics-server-components.yaml
+
+kubectl get apiservice v1beta1.metrics.k8s.io -o yaml
+
+kubectl top pods -A
+
+kubectl get --raw "/apis/metrics.k8s.io/v1beta1/nodes" | jq

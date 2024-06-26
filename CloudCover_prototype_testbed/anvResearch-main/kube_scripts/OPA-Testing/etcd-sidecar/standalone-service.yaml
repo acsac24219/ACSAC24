@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ext # Modify this line with the service name
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ext # Modify this line with the service name
+  labels:
+    app: ext # Modify this line with the service name
+    service: ext # Modify this line with the service name
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80 # Modify this line with the listening port number
+    targetPort: 80
+    name: http
+  selector:
+    app: ext # Modify this line with the service name
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ext # Modify this line with the service name
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ext # Modify this line with the service name
+  template:
+    metadata:
+      labels:
+        app: ext # Modify this line with the service name
+    spec:
+      nodeSelector:
+        appName: ext
+      terminationGracePeriodSeconds: 0
+      serviceAccountName: ext # Modify this line with the service name
+      containers:
+      - name: ext # Modify this line with the service name
+        image: nicholasjackson/fake-service:v0.24.2
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: NAME
+            value: "ext" # Modify this line with the service name
+          - name: LISTEN_ADDR
+            value: "0.0.0.0:80" # Modify this line to set listening port number
+          - name: MESSAGE
+            value: "External Fake Service" # Modify this line with service name
+          - name: HTTP_CLIENT_APPEND_REQUEST
+            value: "false"

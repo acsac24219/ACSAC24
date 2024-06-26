@@ -1,0 +1,52 @@
+---
+- hosts: master
+  become: yes
+  tasks:
+  - name: clear containerd config
+    file:
+      path: "/etc/containerd/config.toml"
+      state: absent
+
+  - name: restart containerd
+    shell: systemctl restart containerd
+
+  - name: kubeadm reset
+    shell: kubeadm reset -f
+
+  - name: remove kube config
+    file:
+      path: "$HOME/.kube/config"
+      state: absent
+
+- hosts: followers
+  become: yes
+  tasks:
+  - name: clear containerd config
+    file:
+      path: "/etc/containerd/config.toml"
+      state: absent
+
+  - name: restart containerd
+    shell: systemctl restart containerd
+
+  - name: kubeadm reset
+    shell: kubeadm reset -f
+
+  - name: remove kube config
+    file:
+      path: "$HOME/.kube/config"
+      state: absent
+
+- hosts: workers
+  become: yes
+  tasks:
+  - name: clear containerd config
+    file:
+      path: "/etc/containerd/config.toml"
+      state: absent
+
+  - name: restart containerd
+    shell: systemctl restart containerd
+
+  - name: kubeadm reset
+    shell: kubeadm reset -f

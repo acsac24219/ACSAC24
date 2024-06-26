@@ -1,0 +1,107 @@
+[INFO ] initializing 127028 nodes from existing storage
+[INFO ] installed GC monitors. will clear references if heap (after GC) is larger than 80%
+Call: WriteHomeTimeline - Execution Time: 6 ms
+Call: ComposeMedia - Execution Time: 4 ms
+Call: StorePost - Execution Time: 3 ms
+Call: ComposeText - Execution Time: 2 ms
+Call: ComposeUniqueId - Execution Time: 2 ms
+Call: ComposeCreatorWithUserId - Execution Time: 2 ms
+Call: WriteUserTimeline - Execution Time: 1 ms
+Call: WriteHomeTimeline - Execution Time: 1 ms
+Call: ComposeMedia - Execution Time: 1 ms
+Call: StorePost - Execution Time: 2 ms
+Call: ComposeText - Execution Time: 2 ms
+Call: ComposeUniqueId - Execution Time: 1 ms
+Call: ComposeCreatorWithUserId - Execution Time: 1 ms
+Call: WriteUserTimeline - Execution Time: 2 ms
+Call: ReadPosts - Execution Time: 1 ms
+Call: GetFollowers - Execution Time: 2 ms
+Call: ReadPosts - Execution Time: 1 ms
+Call: GetFollowers - Execution Time: 1 ms
+Call: ReadPosts - Execution Time: 2 ms
+Call: GetFollowers - Execution Time: 1 ms
+Call: Follow - Execution Time: 1 ms
+Call: Unfollow - Execution Time: 2 ms
+Call: GetUserId - Execution Time: 2 ms
+Call: GetUserId - Execution Time: 2 ms
+Call: GetUserId - Execution Time: 2 ms
+Call: GetUserId - Execution Time: 2 ms
+Call: Follow - Execution Time: 2 ms
+Call: Unfollow - Execution Time: 1 ms
+Call: GetUserId - Execution Time: 1 ms
+Call: GetUserId - Execution Time: 1 ms
+Call: GetUserId - Execution Time: 2 ms
+Call: GetUserId - Execution Time: 2 ms
+Call: Follow - Execution Time: 1 ms
+Call: Unfollow - Execution Time: 1 ms
+Call: GetUserId - Execution Time: 2 ms
+Call: GetUserId - Execution Time: 2 ms
+Call: GetUserId - Execution Time: 2 ms
+Call: GetUserId - Execution Time: 2 ms
+Call: Follow - Execution Time: 1 ms
+Call: Unfollow - Execution Time: 2 ms
+Call: GetUserId - Execution Time: 1 ms
+Call: GetUserId - Execution Time: 2 ms
+Call: GetUserId - Execution Time: 2 ms
+Call: GetUserId - Execution Time: 2 ms
+Call: Follow - Execution Time: 1 ms
+Call: Unfollow - Execution Time: 1 ms
+Call: GetUserId - Execution Time: 1 ms
+Call: GetUserId - Execution Time: 1 ms
+Call: GetUserId - Execution Time: 1 ms
+Call: GetUserId - Execution Time: 1 ms
+Call: Follow - Execution Time: 1 ms
+Call: Unfollow - Execution Time: 2 ms
+Call: GetUserId - Execution Time: 1 ms
+Call: GetUserId - Execution Time: 1 ms
+Call: GetUserId - Execution Time: 1 ms
+Call: GetUserId - Execution Time: 1 ms
+Call: Follow - Execution Time: 2 ms
+Call: Unfollow - Execution Time: 1 ms
+Call: GetUserId - Execution Time: 1 ms
+Call: GetUserId - Execution Time: 1 ms
+Call: GetUserId - Execution Time: 1 ms
+Call: GetUserId - Execution Time: 2 ms
+Call: Follow - Execution Time: 1 ms
+Call: Unfollow - Execution Time: 2 ms
+Call: GetUserId - Execution Time: 2 ms
+Call: GetUserId - Execution Time: 2 ms
+Call: GetUserId - Execution Time: 2 ms
+Call: GetUserId - Execution Time: 2 ms
+Call: ComposeUrls - Execution Time: 2 ms
+Call: ComposeUserMentions - Execution Time: 2 ms
+Call: ComposeUrls - Execution Time: 1 ms
+Call: ComposeUserMentions - Execution Time: 2 ms
+Call: InsertUser - Execution Time: 1 ms
+Call: InsertUser - Execution Time: 1 ms
+Call: InsertUser - Execution Time: 2 ms
+Call: InsertUser - Execution Time: 2 ms
+Call: InsertUser - Execution Time: 1 ms
+Call: InsertUser - Execution Time: 1 ms
+Call: InsertUser - Execution Time: 2 ms
+Call: InsertUser - Execution Time: 2 ms
+Call: InsertUser - Execution Time: 1 ms
+Call: InsertUser - Execution Time: 1 ms
+Call: InsertUser - Execution Time: 1 ms
+Call: InsertUser - Execution Time: 1 ms
+Call: InsertUser - Execution Time: 2 ms
+Call: InsertUser - Execution Time: 2 ms
+Call: ReadPosts - Execution Time: 1 ms
+Call: ReadPosts - Execution Time: 1 ms
+Call: ReadPosts - Execution Time: 2 ms
+Call: GetFollowers - Execution Time: 1 ms
+Call: OnReceivedWorker - Execution Time: 1 ms
+Execution Times per Service:
+Service: SocialGraphHandler - Total Execution Time: 72 ms
+Service: UserTimelineHandler - Total Execution Time: 4 ms
+Service: TextHandler - Total Execution Time: 7 ms
+Service: UserHandler - Total Execution Time: 20 ms
+Service: HomeTimelineHandler - Total Execution Time: 8 ms
+Service: ComposePostHandler - Total Execution Time: 30 ms
+Service: WriteHomeTimelineService - Total Execution Time: 2 ms
+Execution Times:
+Extracting file names and parsing JSON: 19 ms
+Processing method lists and building all_json_objects_methods_list_split: 36 ms
+Processing RPC calls and building last_json_objects_rpc_call_list_split: 1961 ms
+Writing output to file: 22 ms
+Total execution time: 2038 ms

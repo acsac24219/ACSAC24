@@ -1,0 +1,14 @@
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: fs-opa
+spec:
+  action: CUSTOM
+  provider:
+    name: "opa.default.svc.cluster.local"
+  rules:
+  - to:
+    - operation:
+        notPaths: ["/productpage*"]
+        methods: ["GET"]

@@ -1,0 +1,87 @@
+---
+- hosts: all
+  become: yes
+  become_method: sudo
+  become_user: root
+  tasks:
+    - name: pull operator
+      community.docker.docker_image:
+        name: quay.io/tigera/operator:v1.29.3
+        source: pull
+
+    - name: pull typha
+      community.docker.docker_image:
+        name: 172.16.20.50/proxy-cache/calico/typha:v3.25.0
+        source: pull
+
+    - name: pull ctl
+      community.docker.docker_image:
+        name: 172.16.20.50/proxy-cache/calico/ctl:v3.25.0
+        source: pull
+
+    - name: pull node 
+      community.docker.docker_image:
+        name: 172.16.20.50/proxy-cache/calico/node:v3.25.0
+        source: pull
+
+    - name: pull cni 
+      community.docker.docker_image:
+        name: 172.16.20.50/proxy-cache/calico/cni:v3.25.0
+        source: pull
+
+    - name: pull apiserver
+      community.docker.docker_image:
+        name: 172.16.20.50/proxy-cache/calico/apiserver:v3.25.0
+        source: pull
+
+    - name: pull dikastes
+      community.docker.docker_image:
+        name: 172.16.20.50/proxy-cache/calico/dikastes:v3.25.0
+        source: pull
+
+    - name: pull pod2daemon-flexvol
+      community.docker.docker_image:
+        name: 172.16.20.50/proxy-cache/calico/pod2daemon-flexvol:v3.25.0
+        source: pull
+
+    - name: pull csi
+      community.docker.docker_image:
+        name: 172.16.20.50/proxy-cache/calico/csi:v3.25.0
+        source: pull
+
+    - name: pull node-driver
+      community.docker.docker_image:
+        name: 172.16.20.50/proxy-cache/calico/node-driver-registrar:v3.25.0
+        source: pull
+
+    - name: pull kube-controller
+      community.docker.docker_image:
+        name: 172.16.20.50/proxy-cache/calico/kube-controllers:v3.25.0
+        source: pull
+
+    - name: pull istio pilot
+      community.docker.docker_image:
+        name: 172.16.20.50/proxy-cache/istio/pilot:1.16.0
+        source: pull
+
+    - name: pull istio operator  
+      community.docker.docker_image:
+        name: 172.16.20.50/proxy-cache/istio/operator:1.16.0
+        source: pull
+
+    - name: pull istio install-cni
+      community.docker.docker_image:
+        name: 172.16.20.50/proxy-cache/istio/install-cni:1.16.0
+        source: pull
+
+    - name: pull istio proxyv2
+      community.docker.docker_image:
+        name: 172.16.20.50/proxy-cache/istio/proxyv2:1.16.0
+        source: pull
+
+    - name: pull istio fortio
+      community.docker.docker_image:
+        name: 172.16.20.50/proxy-cache/istio/fortio:1.16.0
+        source: pull
+
+

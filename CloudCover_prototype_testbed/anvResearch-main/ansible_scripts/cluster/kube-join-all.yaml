@@ -1,0 +1,64 @@
+---
+- hosts: master
+  become: yes
+  gather_facts: false
+  tasks:
+  - name: get cert
+    shell: kubeadm init phase upload-certs --upload-certs
+    register: cert_key_raw
+
+  - name: set cert key
+    set_fact:
+      cert_key: "{{ cert_key_raw.stdout_lines[2] }}"
+
+  - name: get join command
+    shell: kubeadm token create --print-join-command
+    register: join_command_raw
+
+  - name: set join command
+    set_fact:
+      join_command: "{{ join_command_raw.stdout_lines[0] }}"
+
+- hosts: followers
+  become: yes
+  tasks:
+  - name: change hostname
+    ansible.builtin.hostname:
+      name: "{{ inventory_hostname }}"
+    become: true
+
+  - name: remove swap
+    shell: "swapoff -a"
+
+  - name: clear containerd config
+    file:
+      path: "/etc/containerd/config.toml"
+      state: absent
+
+  - name: restart containerd
+    shell: systemctl restart containerd
+
+  - name: join cluster
+    shell: "{{ hostvars['master'].join_command }} --control-plane --certificate-key {{ hostvars['master'].cert_key }}" 
+
+- hosts: workers
+  become: yes
+  tasks:
+  - name: change hostname
+    ansible.builtin.hostname:
+      name: "{{ inventory_hostname }}"
+    become: true
+
+  - name: remove swap
+    shell: "swapoff -a"
+
+  - name: clear containerd config
+    file:
+      path: "/etc/containerd/config.toml"
+      state: absent
+
+  - name: restart containerd
+    shell: systemctl restart containerd
+
+  - name: join cluster
+    shell: "{{ hostvars['master'].join_command }}"
